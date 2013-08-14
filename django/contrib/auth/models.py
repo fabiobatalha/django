@@ -340,6 +340,17 @@ class PermissionsMixin(models.Model):
                 return False
         return True
 
+    def has_any_perms(self, perm_list, obj=None):
+        """
+        Returns True if the user has any of the specified permissions. If
+        object is passed, it checks if the user has at least one of the required
+        perms for thisobject.
+        """
+        for perm in perm_list:
+            if self.has_perm(perm, obj):
+                return True
+        return False
+
     def has_module_perms(self, app_label):
         """
         Returns True if the user has any permissions in the given app label.
